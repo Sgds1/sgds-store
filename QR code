@@ -1,0 +1,25 @@
+from PIL import ImageEnhance
+
+# Enhance logo quality before embedding it in the QR code
+# Reload the original logo image
+logo = Image.open(logo_path)
+
+# Resize the logo to fit in the QR code
+logo = logo.resize((logo_size, logo_size), Image.Resampling.LANCZOS)
+
+# Enhance sharpness and contrast
+enhancer_sharpness = ImageEnhance.Sharpness(logo)
+logo = enhancer_sharpness.enhance(2.0)
+
+enhancer_contrast = ImageEnhance.Contrast(logo)
+logo = enhancer_contrast.enhance(1.3)
+
+# Recreate QR code image
+qr_img = qr.make_image(fill_color="black", back_color="white").convert('RGB')
+qr_img.paste(logo, pos)
+
+# Save the enhanced version
+enhanced_output_path = "/mnt/data/SGDS_QR_with_HighQuality_Logo.png"
+qr_img.save(enhanced_output_path)
+
+enhanced_output_path
